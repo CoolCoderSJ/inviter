@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Organization Inviter</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/static/style.css">
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <body>
+
+        {% for message in get_flashed_messages() %}
+        {% if message %}
+        <div class="alert">{{message}}</div>
+        {% endif %}
+        {% endfor %}
+
+
+        <h1 style="margin-bottom: 50px;">Inviter</h1>
+        <h3>Your Links</h3>
+        <table>
+            <tr top="yes">
+                <th style="border-radius: 10px 0 0 0;">Organization</th>
+                <th>Teams</th>
+                <th>Link</th>
+                <th style="border-radius: 0 10px 0 0;"></th>
+            </tr>
+            {% for link in links %}
+            <tr>
+                <td>{{ link['org']['name'] }}</td>
+                <td>{{ link['teamStr'] }}</td>
+                <td><a href="/invite/{{ link['_id']|string }}">https://inviter.shuchir.dev/invite/{{ link['_id']|string }}</a></td>
+                <td>
+                    <ion-icon name="copy-outline" onclick="navigator.clipboard.writeText('https://inviter.shuchir.dev/invite/{{ link['_id']|string }}'); alert('Copied!')" style="cursor: pointer;"></ion-icon>
+                    <form method="post" action="/link/delete">
+                        <input type="hidden" name="id" value="{{ link['_id']|string }}">
+                        <button type="submit" style="color: red; background-color: transparent;"><ion-icon name="trash-outline"></ion-icon></button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <br><br>
+        <h2>Create an Invite Link</h2>
+        <form method="post" action="/link/create">
+            <h3>Choose an organization</h3>
+            <select name="org" required onchange="showTeams(this.value)">
+                <option disabled selected value> -- select an organization -- </option>
+                {% for org in orgs %}
+                <option value="{{ org['id']|string }}">{{ org['login'] }}</option>
+                {% endfor %}
+            </select>
+
+            <h3 id="team-header" style="display: none;">(Optional) Automatically add user to team(s)</h3>
+            {% for org in orgs %}
+            <div id="team-select-{{ org['id']|string }}" style="display: none;">
+                <select name="teams" class="dark-scroll" multiple>
+                    {% for team in org['teams'] %}
+                    <option value="{{ team['id']|string }}">{{ team['name'] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            {% endfor %}
+
+            <div></div>
+            <button type="submit" style="margin-top: 10px;">Create Link</button>
+        </form>
+    </body>
+
+    <script>
+        function showTeams(org) {
+            document.querySelectorAll('[id^="team-select-"]').forEach((el) => {
+                el.style.display = 'none';
+            });
+            let numTeams = document.getElementById('team-select-' + org).querySelectorAll('option').length;
+            if (numTeams > 0) {
+                document.getElementById('team-header').style.display = 'block';
+                document.getElementById('team-select-' + org).style.display = 'block';
+            }
+        }
+    </script>
+</html>

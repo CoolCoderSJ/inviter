@@ -1,0 +1,117 @@
+html {
+    background-color: #0b0a18;
+}
+
+body {
+    padding: 50px;
+}
+
+h1, h2, h3, h4, h5, h6, p, a, button, input, label, th, td, select, .alert, li {
+    font-family: "IBM Plex Mono", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+h1, h2 {
+    color: #60CE7F;
+    font-weight: 700;
+}
+
+.primary {
+    color: #60CE7F;
+}
+
+h3, h4 {
+    font-weight: 600;
+}
+
+h3, h4, h5, h6, p, a, button, input, label, th, td, option, .alert, li {
+    color: #efefef;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    background-color: #0f131d;
+    border-radius: 12px;
+}
+
+td, th {
+    padding: 10px;
+}
+
+tr:nth-child(odd) {
+    background-color: #0e121b;
+}
+
+tr[top="yes"] {
+    background-color: #182134;
+}
+
+th {
+    font-weight: 700;
+}
+
+td:nth-child(3) {
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+td:last-child {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    align-items: center;
+}
+
+
+select {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #0f131d;
+    color: #efefef;
+}
+
+option {
+    background-color: #0f131d;
+    color: #efefef;
+}
+
+.dark-scroll {
+    scrollbar-color: #0f131d #0f131d;
+    scrollbar-width: thin;
+}
+
+button {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #60CE7F;
+    color: #0b0a18;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0b0a18;
+    color: #60CE7F;
+}
+
+.alert {
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #60CE7F;
+    color: #0b0a18;
+}
+
+select[multiple] option:checked {
+    background-color: #60CE7F;
+    color: #efefef;
+}
+
+select[multiple] option {
+    padding: 5px;
+    border-radius: 2px;
+}

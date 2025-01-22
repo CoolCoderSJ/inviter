@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Organization Inviter</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/static/style.css">
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <body>
+
+        {% for message in get_flashed_messages() %}
+        {% if message %}
+        <div class="alert">{{message}}</div>
+        {% endif %}
+        {% endfor %}
+
+
+        <h1><span style="color: #efefef;">You are being invited to: </span>{{ org['name'] }}</h1>
+        {% if teams %}
+        <h3>You will be added to the following teams:</h3>
+        <ul>
+            {% for team in teams %}
+            <li>{{ team['name'] }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <h3 style="display: flex; align-items: center;">With the account: <img style="border-radius: 50%; height: 35px; margin-right: 7px; margin-left: 12px;" src="{{ user['avatar_url'] }}"> <span>{{ user['login'] }}</span></h3>
+        <br>
+
+        <form method="post" action="/invite/{{ linkId }}">
+            <button type="submit" style="width: 150px;">Confirm</button>
+        </form>
+    </body>
+</html>

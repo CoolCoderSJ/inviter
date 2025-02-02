@@ -2,3 +2,4 @@ flask
 pymongo
 python-dotenv
 flask-session
+requests
